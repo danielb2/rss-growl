@@ -2,6 +2,13 @@
 
 require 'rss-growl'
 
+Signal.trap("INT") { signal_trap }
+
+def signal_trap
+  exit
+end
+
+
 $0 = 'rss-growl-master'
 cfg = RSSGrowl::Config.new
 cfg.each do |name,settings|
