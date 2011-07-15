@@ -3,18 +3,23 @@ require 'open-uri'
 require 'growl'
 require 'nokogiri'
 require 'rss-growl/rss'
+require 'rss-growl/config'
+require 'yaml'
 
 class RSSGrowl
   attr_accessor :url, :settings
   def initialize(url,opts={})
-    @settings = {
-      :interval => 60
-    }.update(opts)
+    @settings = opts
+    @settings[:interval] ||= 60
     $0 = "rss-growl: #{settings[:title]}"
     @url = url
+    @foo = RSSGrowl::Config.new(url)
+  end
+  def self.root
+    File.realpath(File.join(File.dirname(__FILE__), '..'))
   end
   def root
-    File.realpath(File.join(File.dirname(__FILE__), '..'))
+    self.class.root
   end
   def rss_img
     "#{root}/images/rss.gif"
