@@ -17,6 +17,12 @@ class RSSGrowl
     fh.close
     sr.entries.first
   end
+  def root
+    File.realpath(File.join(File.dirname(__FILE__), '..'))
+  end
+  def rss_img
+    "#{root}/images/rss.gif"
+  end
   def run
     unique = ''
     loop do
@@ -24,7 +30,7 @@ class RSSGrowl
       if unique != latest[:pubDate]
         title = settings[:title] || latest[:title]
         message = sanitized_title(latest[:title])
-        cmd = "growlnotify -s -t '#{title}' -m '#{message}' --image $HOME/rss.gif"
+        cmd = "growlnotify -s -t '#{title}' -m '#{message}' --image #{rss_img}"
         system(cmd)
         unique = latest[:pubDate]
       end
