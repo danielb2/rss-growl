@@ -1,6 +1,7 @@
 require "rss-growl/version"
 require 'open-uri'
 require 'simple-rss'
+require 'growl'
 
 class RSSGrowl
   attr_accessor :url, :settings
@@ -30,8 +31,7 @@ class RSSGrowl
       if unique != latest[:pubDate]
         title = settings[:title] || latest[:title]
         message = sanitized_title(latest[:title])
-        cmd = "growlnotify -s -t '#{title}' -m '#{message}' --image #{rss_img}"
-        system(cmd)
+        Growl.notify message, title: title, icon: rss_img, sticky: true
         unique = latest[:pubDate]
       end
       sleep settings[:interval]
