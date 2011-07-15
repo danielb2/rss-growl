@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "rss-growl"
   s.add_dependency 'simple-rss'
   s.add_dependency 'growl'
+  s.add_dependency 'nokogiri'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

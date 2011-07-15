@@ -2,6 +2,8 @@ require "rss-growl/version"
 require 'open-uri'
 require 'simple-rss'
 require 'growl'
+require 'nokogiri'
+require 'rss-growl/rss'
 
 class RSSGrowl
   attr_accessor :url, :settings
@@ -28,11 +30,12 @@ class RSSGrowl
     unique = ''
     loop do
       latest = get_latest(url)
-      if unique != latest[:pubDate]
-        title = settings[:title] || latest[:title]
-        message = sanitized_title(latest[:title])
+      rss = RSSGrowl::RSS.new(url)
+      if unique != rss.unique_field
+        title = settings[:title] || rss.title
+        message = sanitized_title(rss.title)
         Growl.notify message, title: title, icon: rss_img, sticky: true
-        unique = latest[:pubDate]
+        unique = rss.unique_field
       end
       sleep settings[:interval]
     end
