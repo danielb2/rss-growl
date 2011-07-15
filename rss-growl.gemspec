@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.name        = "rss-growl"
   s.version     = Rss::Growl::VERSION
   s.authors     = ["Daniel Bretoi"]
-  s.email       = ["nefar@otherware.org"]
+  s.email       = ["daniel@bretoi.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{rss with growl notification}
+  s.description = %q{rss with growl notification}
 
   s.rubyforge_project = "rss-growl"
   s.add_dependency 'simple-rss'

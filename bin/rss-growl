@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'rss-growl'
+
+$0 = 'rss-growl-master'
+feeds = [{
+  :url => 'http://www.woot.com/Blog/Feed.ashx', :title => "Woot"
+}, {
+  :url => 'http://feeds.feedburner.com/SlickdealsnetFP', :title => "Slickdeals"
+}]
+
+$pids = []
+feeds.each do |feed|
+  $pids << fork { RSSGrowl.new(feed[:url], :title => feed[:title]).run }
+end
+
+Process.wait
