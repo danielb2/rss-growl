@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.description = %q{rss with growl notification}
 
   s.rubyforge_project = "rss-growl"
-  s.add_dependency 'simple-rss'
   s.add_dependency 'growl'
   s.add_dependency 'nokogiri'
 

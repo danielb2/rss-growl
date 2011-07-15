@@ -3,14 +3,14 @@ class RSSGrowl
     attr_accessor :rss
     def initialize(url)
       fh = open(url)
-      @rss = SimpleRSS.new(fh)
+      @rss = Nokogiri::XML(fh)
       fh.close
     end
     def title
-      rss.entries.first[:title]
+      rss.css('item title').first.content
     end
     def unique_field
-      rss.entries.first[:pubDate]
+      rss.css('item pubDate').first.content
     end
   end
 end

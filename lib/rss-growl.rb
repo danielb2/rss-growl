@@ -1,6 +1,5 @@
 require "rss-growl/version"
 require 'open-uri'
-require 'simple-rss'
 require 'growl'
 require 'nokogiri'
 require 'rss-growl/rss'
@@ -14,12 +13,6 @@ class RSSGrowl
     $0 = "rss-growl: #{settings[:title]}"
     @url = url
   end
-  def get_latest(url)
-    fh = open(url)
-    sr = SimpleRSS.new(fh)
-    fh.close
-    sr.entries.first
-  end
   def root
     File.realpath(File.join(File.dirname(__FILE__), '..'))
   end
@@ -29,7 +22,6 @@ class RSSGrowl
   def run
     unique = ''
     loop do
-      latest = get_latest(url)
       rss = RSSGrowl::RSS.new(url)
       if unique != rss.unique_field
         title = settings[:title] || rss.title
