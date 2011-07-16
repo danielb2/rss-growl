@@ -2,7 +2,7 @@
 
 require 'rss-growl'
 
-abort 'growlnotify is not installed' unless Growl.installed?
+abort 'growlnotify is not installed. Check https://github.com/indirect/growlnotify' unless Growl.installed?
 
 Signal.trap("INT") { signal_trap }
 
