@@ -10,7 +10,7 @@ class RSSGrowl
       rss.css('item title').first.content
     end
     def unique_field
-      rss.css('item pubDate').first.content
+      rss.css('item title').first.content
     end
   end
 end
