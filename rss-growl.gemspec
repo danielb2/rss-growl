@@ -4,7 +4,7 @@ require "rss-growl/version"
 
 Gem::Specification.new do |s|
   s.name        = "rss-growl"
-  s.version     = Rss::Growl::VERSION
+  s.version     = RSSGrowl::VERSION
   s.authors     = ["Daniel Bretoi"]
   s.email       = ["daniel@bretoi.com"]
   s.homepage    = ""

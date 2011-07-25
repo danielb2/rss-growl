@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'rss-growl'
+require 'optparse'
 
 abort 'growlnotify is not installed. Check https://github.com/indirect/growlnotify' unless Growl.installed?
 
@@ -8,6 +9,22 @@ Signal.trap("INT") { signal_trap }
 
 def signal_trap
   exit
+end
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: #{File.basename($0)} [options] <directory>"
+  opts.on("-v", "--version", "version") do
+    puts RSSGrowl::VERSION
+    exit(0)
+  end
+end
+begin
+  parser.parse!
+rescue => e
+  puts "\nERROR: #{e.message}\n\n"
+  puts parser.help
+  puts
+  exit(1)
 end
 
 

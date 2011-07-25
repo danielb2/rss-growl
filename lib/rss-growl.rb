@@ -27,7 +27,7 @@ class RSSGrowl
   def run
     unique = ''
     loop do
-      rss = RSSGrowl::RSS.new(url)
+      rss = RSSGrowl::RSS.new(url, settings)
       if unique != rss.unique_field
         title = settings[:title] || rss.title
         message = sanitized_title(rss.title)
