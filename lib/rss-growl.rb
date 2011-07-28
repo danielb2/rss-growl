@@ -27,12 +27,16 @@ class RSSGrowl
   def run
     unique = ''
     loop do
-      rss = RSSGrowl::RSS.new(url, settings)
-      if unique != rss.unique_field
-        title = settings[:title] || rss.title
-        message = sanitized_title(rss.title)
-        Growl.notify message, title: title, icon: rss_img, sticky: true
-        unique = rss.unique_field
+      begin
+        rss = RSSGrowl::RSS.new(url, settings)
+        if unique != rss.unique_field
+          title = settings[:title] || rss.title
+          message = sanitized_title(rss.title)
+          Growl.notify message, title: title, icon: rss_img, sticky: true
+          unique = rss.unique_field
+        end
+      rescue SocketError
+        puts "Warning: unable to establish socket connection. Trying again in #{settings[:interval]}"
       end
       sleep settings[:interval]
     end
