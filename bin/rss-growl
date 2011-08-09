@@ -31,7 +31,7 @@ end
 $0 = 'rss-growl-master'
 cfg = RSSGrowl::Config.new
 cfg.each do |name,settings|
-  fork { RSSGrowl.new(settings['url'], :title => name, :interval => settings['interval']).run }
+  fork { RSSGrowl.new(settings).run }
 end
 
 Process.wait if cfg.size > 0

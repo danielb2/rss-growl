@@ -8,11 +8,12 @@ require 'yaml'
 
 class RSSGrowl
   attr_accessor :url, :settings
-  def initialize(url,opts={})
-    @settings = opts
-    @settings[:interval] ||= 60
-    $0 = "rss-growl: #{settings[:title]}"
-    @url = url
+  def initialize(settings)
+    @settings = settings
+    @settings['interval'] ||= 60
+    @settings['sticky'] = true unless [TrueClass,FalseClass].include? @settings['sticky'].class
+    $0 = "rss-growl: #{settings['title']}"
+    @url = settings['url']
     @foo = RSSGrowl::Config.new(url)
   end
   def self.root
@@ -30,15 +31,15 @@ class RSSGrowl
       begin
         rss = RSSGrowl::RSS.new(url)
         if unique != rss.unique_field
-          title = settings[:title] || rss.title
+          title = settings['title'] || rss.title
           message = sanitized_title(rss.title)
-          Growl.notify message, title: title, icon: rss_img, sticky: true
+          Growl.notify message, title: title, icon: rss_img, sticky: settings['sticky']
           unique = rss.unique_field
         end
       rescue SocketError, SystemCallError
-        puts "Warning: unable to establish connection. Trying again in #{settings[:interval]}"
+        puts "Warning: unable to establish connection. Trying again in #{settings['interval']}"
       end
-      sleep settings[:interval]
+      sleep settings['interval']
     end
   end
   def sanitized_title(title)
