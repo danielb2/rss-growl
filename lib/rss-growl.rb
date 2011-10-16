@@ -36,7 +36,7 @@ class RSSGrowl
           Growl.notify message, title: title, icon: rss_img, sticky: settings['sticky']
           unique = rss.unique_field
         end
-      rescue SocketError, SystemCallError, OpenURI::HTTPError
+      rescue SocketError, SystemCallError, OpenURI::HTTPError, Errno::EHOSTUNREACH, EOFError
         puts "Warning: unable to establish connection. Trying again in #{settings['interval']}"
       end
       sleep settings['interval']
